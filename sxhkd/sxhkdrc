@@ -1,0 +1,25 @@
+# This file maps dwm-independent commands
+# Some keys are mapped by dwm so check on those in the config.h
+
+# Shortcut bindings
+alt + shift + Return
+    st
+alt + p
+    dmenu_run
+alt + e
+    emoji
+alt + w
+    wifi
+
+# multimedia keys
+XF86AudioRaiseVolume
+    pactl set-sink-volume 0 +5% && pactl set-sink-mute 0 0; refbar
+XF86AudioLowerVolume
+    pactl set-sink-volume 0 -5% && pactl set-sink-mute 0 0; refbar
+XF86AudioMute
+    set-sink-mute 0 toggle; refbar
+XF86MonBrightnessUp
+    light -A 10; refbar
+XF86MonBrightnessDown
+    light -U 10; refbar
+

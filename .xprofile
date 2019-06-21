@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# This file runs when a DM logs you into a graphical session.
+
+setbg &
+compton -f &
+dwmbar &
+dunst &
+naturalscrolling &
+sxhkd &
+
