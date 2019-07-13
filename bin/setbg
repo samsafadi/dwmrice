@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# sets the background with feh
+feh --bg-scale /home/bassam/Wallpapers/bench.jpg
+

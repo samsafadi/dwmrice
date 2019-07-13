@@ -8,6 +8,7 @@
 # and so they are needed there. To prevent doubling up commands, I source them
 # here with the line below.
 
+[[ -f ~/.Xdefaults ]] && xrdb -merge ~/.Xdefaults
 [ -f ~/.xprofile ] && . ~/.xprofile
 
 

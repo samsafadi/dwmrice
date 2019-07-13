@@ -1,0 +1,6 @@
+#!/bin/sh
+# Prompts yes or no to $1 and runs $2 if Yes
+
+[ $(echo -e "No\nYes" | dmenu -i -p "$1") \
+== "Yes" ] && $2
+

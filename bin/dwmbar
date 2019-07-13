@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# Sets status bar with xsetroot command
+
+# Handle sigtrap sent by refbar to update the status bar immediately
+trap 'update' 5
+
+# set delimiter character
+delim="|"
+
+# function that outputs the contents of the dwm status bar
+status () {\
+    # Output current playing spotify track if exists
+    var=$(spotifybar)
+    if [[ ! -z $var ]]
+    then
+        spotifybar
+        echo "$delim"
+    fi
+
+    # brightness
+    echo "" && brightness
+    echo "$delim"
+
+    # volume
+    volume=$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/') # | sed "s/\[on\]//;s/\[off\]//")
+    mute=$(amixer get Master | grep off)
+
+    if test -z "${mute}"
+    then
+    if test "$volume" -gt 0
+    then
+        echo -e " ${volume}"
+    else
+        echo -e "Mute"
+    fi
+    else
+        echo -e "Mute"
+    fi
+
+    echo "$delim"
+
+    # battery
+    # Will show all batteries with approximate icon for remaining power.
+    x=$(cat /sys/class/power_supply/BAT0/capacity)
+    y=$(cat /sys/class/power_supply/BAT0/status)
+    #echo "" && 
+    echo "$y: $x%"
+    echo "$delim"
+
+    # time
+    date '+%a %b %d %Y %I:%M%p'
+    echo "$delim"
+
+    # network
+    #echo "" 
+    network
+    }
+
+update () { \
+    # So all that big status function was just a command that quicking gets
+	# what we want to be the statusbar. This xsetroot command is what sets
+	# it. Note that the tr command replaces newlines with spaces. This is
+	# to prevent some weird issues that cause significant slowing of
+	# everything in dwm. Note entirely sure of the cause, but again, the tr
+    # command easily avoids it.
+    xsetroot -name "$(status | tr '\n' ' ')" &
+    wait
+    }
+
+while :; do
+    update
+	# Sleep for a minute after changing the status bar before updating it
+	# again. We run sleep in the background and use wait until it finishes,
+    # because traps can interrupt wait immediately, but they can't do that
+    # with sleep.
+	sleep 10s &
+    wait
+done

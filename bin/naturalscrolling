@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xinput set-prop "DLL07A0:01 044E:120B" "libinput Natural Scrolling Enabled" 1

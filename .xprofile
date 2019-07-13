@@ -8,4 +8,7 @@ dwmbar &
 dunst &
 naturalscrolling &
 sxhkd &
+udiskie &
+dropbox &
+xss-lock -l slock &
 
